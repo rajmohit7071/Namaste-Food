@@ -10,8 +10,8 @@ import useOnlinestatus from "../utils/useOnlinestatus";
 console.log(resobj);
 const Body = () => {
   const [resobj1, setResobj1] = useState([]);
-  const[filteredres,setfilteredres]=useState([]);
-  const [searchtext,setsearchtext]=useState("")
+  const [filteredres, setfilteredres] = useState([]);
+  const [searchtext, setsearchtext] = useState("")
   //Continue from use effect and check the image taken in you gallery for why we are using the useEffect
   useEffect(() => {
     fetchData();
@@ -24,20 +24,22 @@ const Body = () => {
     const json = await data.json();
     console.log(json)
 
-   
-  
+
+
 
     setResobj1(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setfilteredres(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
   };
-// This is known as conditional rendering
+  // This is known as conditional rendering
 
-const online=useOnlinestatus();
-if(online===false){
-  return <h1>Looks like you are ofline !!!</h1>
-}
+  const online = useOnlinestatus();
+  if (online === false) {
+    return <h1>Looks like you are ofline !!!</h1>
+  }
+
+  if(!resobj1) return;
 
   if (resobj1.length === 0) {
     return (
@@ -45,9 +47,9 @@ if(online===false){
         <ShimmerUI />
         <ShimmerUI />
         <ShimmerUI />
-        <ShimmerUI/>
-        <ShimmerUI/>
-        <ShimmerUI/>
+        <ShimmerUI />
+        <ShimmerUI />
+        <ShimmerUI />
       </div>
     );
   }
@@ -55,38 +57,36 @@ if(online===false){
   return (
     <div className="body">
       <div className="buttons">
-      <div className="search">
-       <input type="text" className="search-box"value={searchtext} onChange={(e)=>{
-setsearchtext(e.target.value);
-       }}/>
-       <button onClick={()=>{
+        <div className="search">
+          <input type="text" className="search-box" value={searchtext} onChange={(e) => {
+            setsearchtext(e.target.value);
+          }} />
+          <button onClick={() => {
 
- const filterres=resobj1.filter((res)=>res.info.name.toLowerCase().includes(searchtext.toLowerCase()));
- setfilteredres(filterres)
+            const filterres = resobj1.filter((res) => res.info.name.toLowerCase().includes(searchtext.toLowerCase()));
+            setfilteredres(filterres)
 
 
 
-       }}>Search</button>
-      </div>
-      <div className="search1">
-       
-        
-      <button
-  className="filter-btn"
-  onClick={() => {
-    const topRatedRestaurants = resobj1.filter((res) => res.info.avgRating >= 4.4);
-    setfilteredres(topRatedRestaurants);
-  }}
->
-  Filter Top Rated
-</button>
+          }}>Search</button>
+        </div>
+        <div className="search1">
+          <button
+            className="filter-btn"
+            onClick={() => {
+              const topRatedRestaurants = resobj1.filter((res) => res.info.avgRating >= 4.4);
+              setfilteredres(topRatedRestaurants);
+            }}
+          >
+            Filter Top Rated
+          </button>
 
-      </div>
+        </div>
       </div>
 
       <div className="res-container">
         {filteredres.map((restaurant) => (
-          <Link key={restaurant.info.id} to={"/restaurant/"+restaurant.info.id}><RestaurantCard  resData={restaurant} /></Link>
+          <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}><RestaurantCard resData={restaurant} /></Link>
         ))}
       </div>
     </div>

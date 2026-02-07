@@ -7,7 +7,7 @@ const About=()=>{
    
             {/* <User/> */}
 
-            <UserClass name={"Shivansh Chaturvedi(Classes)"}location={"Meerut"}/>
+            <UserClass name={"Mohit Raj(Classes)"}location={"Noida"}/>
         </div>
     )
 }
